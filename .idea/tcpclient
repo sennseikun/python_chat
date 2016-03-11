@@ -1,0 +1,25 @@
+from socket import *
+
+host = 'localhost'
+port = 12345
+bufsiz = 1024
+
+
+tcpCliSock = socket(AF_INET, SOCK_STREAM)
+
+tcpCliSock.connect((host, port))
+
+while True:
+    
+    data = input('> ')
+    if not data:
+        break
+    
+    tcpCliSock.send(data)
+    
+    response = tcpCliSock.recv(bufsiz)
+    if not response:
+        break
+    print (response)
+
+tcpCliSock.close()
