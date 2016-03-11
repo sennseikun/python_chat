@@ -1,0 +1,30 @@
+from socket import *
+
+host = ''
+port = 12345
+bufsiz = 1024
+
+
+tcpSerSock = socket(AF_INET, SOCK_STREAM)
+
+tcpSerSock.bind((host, port))
+
+tcpSerSock.listen(5)
+
+while True:
+    
+    print('waiting for connection...')
+    tcpCliSock, addr = tcpSerSock.accept()
+    print('...connected from:', addr)
+
+    while True:
+        
+        data = tcpCliSock.recv(bufsiz)
+        if not data:
+            break
+        
+        tcpCliSock.send('[%s] %s' %("You send:", data))
+
+    tcpCliSock.close()
+
+tcpSerSock.close()
