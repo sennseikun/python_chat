@@ -17,11 +17,15 @@ class MessageReceiver(Thread):
         self.daemon = True
 
         # TODO: Finish initialization of MessageReceiver
+        self.client=client
         self.connection=connection
         self.start()
+        super(MessageReceiver,self).__init__()
         
     def run(self):
         # TODO: Make MessageReceiver receive and handle payloads
         while True:
-            received=self.connection.recv()
+            data=self.connection.recv()
+            if data:
+                self.client.message_received(data,self.connection)
         pass
